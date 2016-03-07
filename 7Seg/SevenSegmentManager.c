@@ -259,7 +259,7 @@ void SevenSegmentManager_Task(SevenSegment *sys)
     {
       DisableSegments();
       SetChar(sys->Display[sys->RefreshCounter]);
-      if(sys->RefreshCounter==1)
+      if((sys->RefreshCounter==3)||(sys->RefreshCounter==2))
         SegDp=CenterFlash;
       EnableSegment(sys->RefreshCounter);
     }
@@ -267,7 +267,7 @@ void SevenSegmentManager_Task(SevenSegment *sys)
     {
       DisableSegments();
       SetCharI(sys->Display[sys->RefreshCounter]);
-      if(sys->RefreshCounter==2)
+      if((sys->RefreshCounter==0)||(sys->RefreshCounter==1))
         SegDpI=CenterFlash;
       EnableSegmentI(sys->RefreshCounter);
     }

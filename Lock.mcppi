@@ -38,20 +38,21 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=7
+Count=12
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\uses\P18\
-Path2=C:\Users\Kapouchima\Desktop\Lock\Firmware\
-Path3=C:\Users\Kapouchima\Desktop\Lock\Firmware\Keys\
-Path4=C:\Users\Kapouchima\Desktop\Lock\Firmware\7Seg\
-Path5=C:\Users\Kapouchima\Desktop\Lock\Firmware\DS3231\
-Path6=C:\Users\Kapouchima\Desktop\Lock\Firmware\Signaling\
+Path2=C:\Users\Kapouchima\Desktop\Lock\Firmware\UTAB-NightLock\
+Path3=C:\Users\Kapouchima\Desktop\Lock\Firmware\
+Path8=C:\Users\Kapouchima\Desktop\Lock\Firmware\UTAB-NightLock\Keys\
+Path9=C:\Users\Kapouchima\Desktop\Lock\Firmware\UTAB-NightLock\7Seg\
+Path10=C:\Users\Kapouchima\Desktop\Lock\Firmware\UTAB-NightLock\DS3231\
+Path11=C:\Users\Kapouchima\Desktop\Lock\Firmware\UTAB-NightLock\Signaling\
 [HEADER_PATH]
-Count=4
-Path0=C:\Users\Kapouchima\Desktop\Lock\Firmware\7Seg\
-Path1=C:\Users\Kapouchima\Desktop\Lock\Firmware\Keys\
-Path2=C:\Users\Kapouchima\Desktop\Lock\Firmware\DS3231\
-Path3=C:\Users\Kapouchima\Desktop\Lock\Firmware\Signaling\
+Count=8
+Path4=C:\Users\Kapouchima\Desktop\Lock\Firmware\UTAB-NightLock\7Seg\
+Path5=C:\Users\Kapouchima\Desktop\Lock\Firmware\UTAB-NightLock\Keys\
+Path6=C:\Users\Kapouchima\Desktop\Lock\Firmware\UTAB-NightLock\DS3231\
+Path7=C:\Users\Kapouchima\Desktop\Lock\Firmware\UTAB-NightLock\Signaling\
 [HEADERS]
 Count=4
 File0=7Seg\SevenSegmentManager.h

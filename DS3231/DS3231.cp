@@ -1,5 +1,5 @@
-#line 1 "C:/Users/Kapouchima/Desktop/Lock/Firmware/DS3231/DS3231.c"
-#line 1 "c:/users/kapouchima/desktop/lock/firmware/ds3231/ds3231.h"
+#line 1 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/DS3231/DS3231.c"
+#line 1 "c:/users/kapouchima/desktop/lock/firmware/utab-nightlock/ds3231/ds3231.h"
 
 
 
@@ -16,7 +16,7 @@ typedef struct
 
 void SetTime(Time *t);
 void GetTime(Time *t);
-#line 6 "C:/Users/Kapouchima/Desktop/Lock/Firmware/DS3231/DS3231.c"
+#line 6 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/DS3231/DS3231.c"
 void SetTime(Time *t)
 {
 
@@ -29,7 +29,7 @@ void SetTime(Time *t)
  i2c1_stop();
 
 }
-#line 36 "C:/Users/Kapouchima/Desktop/Lock/Firmware/DS3231/DS3231.c"
+#line 36 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/DS3231/DS3231.c"
 void GetTime(Time *t)
 {
 

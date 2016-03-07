@@ -1,6 +1,6 @@
-#line 1 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
-#line 1 "c:/users/kapouchima/desktop/lock/firmware/7seg/sevensegmentmanager.h"
-#line 49 "c:/users/kapouchima/desktop/lock/firmware/7seg/sevensegmentmanager.h"
+#line 1 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
+#line 1 "c:/users/kapouchima/desktop/lock/firmware/utab-nightlock/7seg/sevensegmentmanager.h"
+#line 49 "c:/users/kapouchima/desktop/lock/firmware/utab-nightlock/7seg/sevensegmentmanager.h"
 typedef struct
 {
  char Display[ 4 ];
@@ -15,11 +15,11 @@ extern char CenterFlash;
 
 void SevenSegmentManager_Task(SevenSegment *);
 void SevenSegmentManager_AnimationEPOCH(SevenSegment *);
-#line 1 "c:/users/kapouchima/desktop/lock/firmware/keys/keys.h"
-#line 41 "c:/users/kapouchima/desktop/lock/firmware/keys/keys.h"
+#line 1 "c:/users/kapouchima/desktop/lock/firmware/utab-nightlock/keys/keys.h"
+#line 41 "c:/users/kapouchima/desktop/lock/firmware/utab-nightlock/keys/keys.h"
 void KeysSystem_EPOCH();
 char KeysSystem_Task();
-#line 1 "c:/users/kapouchima/desktop/lock/firmware/ds3231/ds3231.h"
+#line 1 "c:/users/kapouchima/desktop/lock/firmware/utab-nightlock/ds3231/ds3231.h"
 
 
 
@@ -36,8 +36,8 @@ typedef struct
 
 void SetTime(Time *t);
 void GetTime(Time *t);
-#line 1 "c:/users/kapouchima/desktop/lock/firmware/signaling/signaling.h"
-#line 30 "c:/users/kapouchima/desktop/lock/firmware/signaling/signaling.h"
+#line 1 "c:/users/kapouchima/desktop/lock/firmware/utab-nightlock/signaling/signaling.h"
+#line 30 "c:/users/kapouchima/desktop/lock/firmware/utab-nightlock/signaling/signaling.h"
 typedef struct
 {
  char SignalCode;
@@ -59,7 +59,7 @@ void SignalingSystem_ClearSignal(SignalingSystem *,char);
 void SignalingSystem_ClearAllSignals(SignalingSystem * ,char );
 void SignalingSystem_Task(SignalingSystem *);
 void SignalingSystem_Init(SignalingSystem *);
-#line 34 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 37 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 char Pass[4],TimeTemp[4],PassCounter=0,MenuExpireCounter=0,CenterFlash=1,SetCounter=0;
 char Keys=0,Flag10ms=0,Flag500ms=0,Counter10ms=0,State=0,RTL=1,ValuePosition=0,StateOfNow=2;
 Time Now,temp;
@@ -108,9 +108,9 @@ void Init()
  portc=0;
  portd=0;
  porte=0;
- trisa=0b00111111;
+ trisa=0b00111110;
  trisb=0b11110000;
- trisc=0b11100010;
+ trisc=0b01100010;
  trisd=0b01110010;
  trise=0b1000;
 
@@ -128,7 +128,7 @@ void Init()
  LoadConfig();
 
 }
-#line 115 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 118 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void interrupt()
 {
  if(TMR0IF_bit)
@@ -143,7 +143,7 @@ void interrupt()
  TMR0IF_bit=0;
  }
 }
-#line 146 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 149 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void main() {
 
 
@@ -190,6 +190,7 @@ void main() {
  SignalingSystem_Task(&SigSys);
  GetTime(&Now);
   (portd.b7) =Now.SecondBCD%2;
+  (portc.b7) = (portd.b7) ;
  Flag500ms=0;
  }
 
@@ -199,7 +200,7 @@ void main() {
  MotorManager();
  }
 }
-#line 220 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 224 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void LockManager()
 {
  if(GetDesireStatus())
@@ -219,7 +220,7 @@ void LockManager()
  }
 
 }
-#line 263 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 267 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void StateManager()
 {
 
@@ -248,7 +249,7 @@ void StateManager()
 
  }
 }
-#line 304 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 308 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void State0()
 {
 
@@ -263,7 +264,7 @@ void State0()
  {PassCounter=0;Pass[0]=0;Pass[1]=0;Pass[2]=0;Pass[3]=0;MenuExpireCounter= 30 ;State=3;}
 
 }
-#line 333 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 337 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void State1()
 {
  if(CheckKey('U'))
@@ -284,7 +285,7 @@ void State1()
  Segment.Display[0]=Pass[0];Segment.Display[1]=Pass[1];Segment.Display[2]=Pass[2];Segment.Display[3]=Pass[3];
 
 }
-#line 368 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 372 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void State2()
 {
  if((Pass[0]==OpenPass[0]) && (Pass[1]==OpenPass[1]) && (Pass[2]==OpenPass[2]) && (Pass[3]==OpenPass[3]))
@@ -304,7 +305,7 @@ void State2()
  }
  State=0;
 }
-#line 405 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 409 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void State3()
 {
  if(CheckKey('U'))
@@ -329,7 +330,7 @@ void State3()
 
  Segment.Display[0]=Pass[0];Segment.Display[1]=Pass[1];Segment.Display[2]=Pass[2];Segment.Display[3]=Pass[3];
 }
-#line 452 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 456 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void Menu0()
 {
  Segment.Display[0]=13;Segment.Display[1]=13;Segment.Display[2]=13;Segment.Display[3]=13;
@@ -349,7 +350,7 @@ void Menu0()
  if(CheckKey('C'))
  {SetCounter=4;State=11;ValuePosition=0;}
 }
-#line 487 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 491 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void Menu1()
 {
  switch(SetCounter)
@@ -477,7 +478,7 @@ void Menu1()
 
  }
 }
-#line 636 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 640 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 char CheckKey(char key)
 {
  if(key == 'U')
@@ -513,19 +514,19 @@ char CheckKey(char key)
  return 0;
 
 }
-#line 691 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 695 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void MotorManager()
 {
  if(SignalingSystem_CheckSignal(&SigSys, 1))
- { (portd.b3) =0; (portd.b2) =1;}
+ { (portd.b3) =0; (portd.b2) =1; (porta.b0) =0;}
 
  if(SignalingSystem_CheckSignal(&SigSys, 2))
- { (portd.b2) =0; (portd.b3) =1;}
+ { (portd.b2) =0; (portd.b3) =1; (porta.b0) =1;}
 
  if(SignalingSystem_CheckSignal(&SigSys, 3))
  { (portd.b3) =0; (portd.b2) =0;}
 }
-#line 715 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 719 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void SaveConfig()
 {
  EEPROM_Write(0,LockTime[0]);
@@ -550,7 +551,7 @@ void SaveConfig()
 
  EEPROM_Write(16,RTL);
 }
-#line 757 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 761 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 void LoadConfig()
 {
  LockTime[0]=EEPROM_Read(0);
@@ -575,7 +576,7 @@ void LoadConfig()
 
  RTL=EEPROM_Read(16);
 }
-#line 797 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 801 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 char TimeCompare(char *A,char *B)
 {
  char res=0;
@@ -592,7 +593,7 @@ char TimeCompare(char *A,char *B)
 
  return res;
 }
-#line 830 "C:/Users/Kapouchima/Desktop/Lock/Firmware/Lock.c"
+#line 834 "C:/Users/Kapouchima/Desktop/Lock/Firmware/UTAB-NightLock/Lock.c"
 char GetDesireStatus()
 {
  char UnlockTimeTemp[4],NowTemp[4],NowTempAdded[4],res=0;

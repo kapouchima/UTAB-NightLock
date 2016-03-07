@@ -621,7 +621,7 @@ _SevenSegmentManager_Task:
 	MOVF        POSTINC0+0, 0 
 	MOVWF       FARG_SetChar_ch+0 
 	CALL        _SetChar+0, 0
-;SevenSegmentManager.c,262 :: 		if(sys->RefreshCounter==1)
+;SevenSegmentManager.c,262 :: 		if((sys->RefreshCounter==3)||(sys->RefreshCounter==2))
 	MOVLW       4
 	ADDWF       FARG_SevenSegmentManager_Task_sys+0, 0 
 	MOVWF       FSR0 
@@ -629,18 +629,30 @@ _SevenSegmentManager_Task:
 	ADDWFC      FARG_SevenSegmentManager_Task_sys+1, 0 
 	MOVWF       FSR0H 
 	MOVF        POSTINC0+0, 0 
-	XORLW       1
-	BTFSS       STATUS+0, 2 
-	GOTO        L_SevenSegmentManager_Task49
+	XORLW       3
+	BTFSC       STATUS+0, 2 
+	GOTO        L__SevenSegmentManager_Task60
+	MOVLW       4
+	ADDWF       FARG_SevenSegmentManager_Task_sys+0, 0 
+	MOVWF       FSR0 
+	MOVLW       0
+	ADDWFC      FARG_SevenSegmentManager_Task_sys+1, 0 
+	MOVWF       FSR0H 
+	MOVF        POSTINC0+0, 0 
+	XORLW       2
+	BTFSC       STATUS+0, 2 
+	GOTO        L__SevenSegmentManager_Task60
+	GOTO        L_SevenSegmentManager_Task51
+L__SevenSegmentManager_Task60:
 ;SevenSegmentManager.c,263 :: 		SegDp=CenterFlash;
 	BTFSC       _CenterFlash+0, 0 
-	GOTO        L__SevenSegmentManager_Task62
+	GOTO        L__SevenSegmentManager_Task68
 	BCF         PORTE+0, 2 
-	GOTO        L__SevenSegmentManager_Task63
-L__SevenSegmentManager_Task62:
+	GOTO        L__SevenSegmentManager_Task69
+L__SevenSegmentManager_Task68:
 	BSF         PORTE+0, 2 
-L__SevenSegmentManager_Task63:
-L_SevenSegmentManager_Task49:
+L__SevenSegmentManager_Task69:
+L_SevenSegmentManager_Task51:
 ;SevenSegmentManager.c,264 :: 		EnableSegment(sys->RefreshCounter);
 	MOVLW       4
 	ADDWF       FARG_SevenSegmentManager_Task_sys+0, 0 
@@ -652,7 +664,7 @@ L_SevenSegmentManager_Task49:
 	MOVWF       FARG_EnableSegment_seg+0 
 	CALL        _EnableSegment+0, 0
 ;SevenSegmentManager.c,265 :: 		}
-	GOTO        L_SevenSegmentManager_Task50
+	GOTO        L_SevenSegmentManager_Task52
 L_SevenSegmentManager_Task48:
 ;SevenSegmentManager.c,268 :: 		DisableSegments();
 	CALL        _DisableSegments+0, 0
@@ -674,7 +686,7 @@ L_SevenSegmentManager_Task48:
 	MOVF        POSTINC0+0, 0 
 	MOVWF       FARG_SetCharI_ch+0 
 	CALL        _SetCharI+0, 0
-;SevenSegmentManager.c,270 :: 		if(sys->RefreshCounter==2)
+;SevenSegmentManager.c,270 :: 		if((sys->RefreshCounter==0)||(sys->RefreshCounter==1))
 	MOVLW       4
 	ADDWF       FARG_SevenSegmentManager_Task_sys+0, 0 
 	MOVWF       FSR0 
@@ -682,18 +694,30 @@ L_SevenSegmentManager_Task48:
 	ADDWFC      FARG_SevenSegmentManager_Task_sys+1, 0 
 	MOVWF       FSR0H 
 	MOVF        POSTINC0+0, 0 
-	XORLW       2
-	BTFSS       STATUS+0, 2 
-	GOTO        L_SevenSegmentManager_Task51
+	XORLW       0
+	BTFSC       STATUS+0, 2 
+	GOTO        L__SevenSegmentManager_Task59
+	MOVLW       4
+	ADDWF       FARG_SevenSegmentManager_Task_sys+0, 0 
+	MOVWF       FSR0 
+	MOVLW       0
+	ADDWFC      FARG_SevenSegmentManager_Task_sys+1, 0 
+	MOVWF       FSR0H 
+	MOVF        POSTINC0+0, 0 
+	XORLW       1
+	BTFSC       STATUS+0, 2 
+	GOTO        L__SevenSegmentManager_Task59
+	GOTO        L_SevenSegmentManager_Task55
+L__SevenSegmentManager_Task59:
 ;SevenSegmentManager.c,271 :: 		SegDpI=CenterFlash;
 	BTFSC       _CenterFlash+0, 0 
-	GOTO        L__SevenSegmentManager_Task64
+	GOTO        L__SevenSegmentManager_Task70
 	BCF         PORTE+0, 2 
-	GOTO        L__SevenSegmentManager_Task65
-L__SevenSegmentManager_Task64:
+	GOTO        L__SevenSegmentManager_Task71
+L__SevenSegmentManager_Task70:
 	BSF         PORTE+0, 2 
-L__SevenSegmentManager_Task65:
-L_SevenSegmentManager_Task51:
+L__SevenSegmentManager_Task71:
+L_SevenSegmentManager_Task55:
 ;SevenSegmentManager.c,272 :: 		EnableSegmentI(sys->RefreshCounter);
 	MOVLW       4
 	ADDWF       FARG_SevenSegmentManager_Task_sys+0, 0 
@@ -705,7 +729,7 @@ L_SevenSegmentManager_Task51:
 	MOVWF       FARG_EnableSegmentI_seg+0 
 	CALL        _EnableSegmentI+0, 0
 ;SevenSegmentManager.c,273 :: 		}
-L_SevenSegmentManager_Task50:
+L_SevenSegmentManager_Task52:
 ;SevenSegmentManager.c,277 :: 		sys->RefreshCounter=sys->RefreshCounter+1;
 	MOVLW       4
 	ADDWF       FARG_SevenSegmentManager_Task_sys+0, 0 
@@ -732,7 +756,7 @@ L_SevenSegmentManager_Task50:
 	MOVLW       4
 	SUBWF       POSTINC0+0, 0 
 	BTFSS       STATUS+0, 0 
-	GOTO        L_SevenSegmentManager_Task52
+	GOTO        L_SevenSegmentManager_Task56
 ;SevenSegmentManager.c,279 :: 		sys->RefreshCounter=0;
 	MOVLW       4
 	ADDWF       FARG_SevenSegmentManager_Task_sys+0, 0 
@@ -741,7 +765,7 @@ L_SevenSegmentManager_Task50:
 	ADDWFC      FARG_SevenSegmentManager_Task_sys+1, 0 
 	MOVWF       FSR1H 
 	CLRF        POSTINC1+0 
-L_SevenSegmentManager_Task52:
+L_SevenSegmentManager_Task56:
 ;SevenSegmentManager.c,280 :: 		}
 L_end_SevenSegmentManager_Task:
 	RETURN      0
@@ -760,7 +784,7 @@ _SevenSegmentManager_AnimationEPOCH:
 	MOVLW       255
 	SUBWF       POSTINC0+0, 0 
 	BTFSS       STATUS+0, 0 
-	GOTO        L_SevenSegmentManager_AnimationEPOCH53
+	GOTO        L_SevenSegmentManager_AnimationEPOCH57
 ;SevenSegmentManager.c,296 :: 		sys->AnimationCounter=0;
 	MOVLW       5
 	ADDWF       FARG_SevenSegmentManager_AnimationEPOCH_sys+0, 0 
@@ -769,8 +793,8 @@ _SevenSegmentManager_AnimationEPOCH:
 	ADDWFC      FARG_SevenSegmentManager_AnimationEPOCH_sys+1, 0 
 	MOVWF       FSR1H 
 	CLRF        POSTINC1+0 
-	GOTO        L_SevenSegmentManager_AnimationEPOCH54
-L_SevenSegmentManager_AnimationEPOCH53:
+	GOTO        L_SevenSegmentManager_AnimationEPOCH58
+L_SevenSegmentManager_AnimationEPOCH57:
 ;SevenSegmentManager.c,298 :: 		sys->AnimationCounter=sys->AnimationCounter+1;
 	MOVLW       5
 	ADDWF       FARG_SevenSegmentManager_AnimationEPOCH_sys+0, 0 
@@ -787,7 +811,7 @@ L_SevenSegmentManager_AnimationEPOCH53:
 	MOVFF       R2, FSR1H
 	MOVF        R0, 0 
 	MOVWF       POSTINC1+0 
-L_SevenSegmentManager_AnimationEPOCH54:
+L_SevenSegmentManager_AnimationEPOCH58:
 ;SevenSegmentManager.c,299 :: 		}
 L_end_SevenSegmentManager_AnimationEPOCH:
 	RETURN      0

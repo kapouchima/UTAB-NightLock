@@ -7,7 +7,10 @@
 
 
 
-#define LED (portd.b7)
+#define LED1 (portd.b7)
+#define LED2 (portc.b7)
+#define Relay (porta.b0)
+#define RFact (porta.b3)
 #define Dir1 (portd.b2)
 #define Dir2 (portd.b3)
 
@@ -79,9 +82,9 @@ void Init()
     portc=0;
     portd=0;
     porte=0;
-    trisa=0b00111111;
+    trisa=0b00111110;
     trisb=0b11110000;
-    trisc=0b11100010;
+    trisc=0b01100010;
     trisd=0b01110010;
     trise=0b1000;
   //------- TMR0 Init
@@ -157,9 +160,9 @@ void main() {
   
   for(i=0;i<3;i++)
   {
-    LED=1;
+    LED1=1;
     delay_ms(100);
-    LED=0;
+    LED1=0;
     delay_ms(100);
   }
   
@@ -188,7 +191,8 @@ void main() {
       SignalingSystem_SystemEPOCH(&SigSys);
       SignalingSystem_Task(&SigSys);
       GetTime(&Now);
-      LED=Now.SecondBCD%2;
+      LED1=Now.SecondBCD%2;
+      LED2=LED1;
       Flag500ms=0;
     }
 
@@ -691,10 +695,10 @@ char CheckKey(char key)
 void MotorManager()
 {
   if(SignalingSystem_CheckSignal(&SigSys, 1))//Start to Unlock
-    {Dir2=0;Dir1=1;}
+    {Dir2=0;Dir1=1;Relay=0;}
     
   if(SignalingSystem_CheckSignal(&SigSys, 2))//Start to Lock
-    {Dir1=0;Dir2=1;}
+    {Dir1=0;Dir2=1;Relay=1;}
     
   if(SignalingSystem_CheckSignal(&SigSys, 3))//Stop
     {Dir2=0;Dir1=0;}
